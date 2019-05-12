@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Fetch API</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            padding: 32px;
+        }
+
+        .inputs {
+            padding-top: 64px;
+        }
+
+        .inputs label {
+            display: inline-block;
+            width: 48px;
+            margin-top: 8px;
+        }
+
+        .inputs > * {
+            height: 32px;
+        }
+
+        .inputs > input {          
+            padding-left: 3px;
+            padding-right: 3px;
+        }
+
+        .inputs button {
+            background-color: blue;
+            padding: 5px;
+            height: 30px;
+            border-radius: 3px;
+            border: 0 solid transparent;
+            margin-top: 10px;
+            font-weight: bolder;
+            color: white;
+        }
+
+        .earthquakes {
+            margin-top: 32px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
+
+        .quake-item {
+            background-color: burlywood;
+            border-radius: 5px;
+            padding: 4px 10px;
+            margin-top: 10px;
+            flex: 0 0 30%;
+            min-width: 500px;
+            height: 60px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        @media screen and (max-width: 768px) {
+            .quake-item {
+                min-width: 70%;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+        }
+        
+        .quake-item div {
+            display: inline-block;
+        }
+        
+        .quake-item .magnitude {
+            background-color: white;
+            min-width: 35px;
+            min-height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            margin-right: 20px;
+            font-weight: bold;
+        }        
+    </style>
+</head>
+<body>
+    <h1>
+        Earthquakes
+    </h1>
+    <div class="wrapper">
+        <div class="inputs">
+            <label for="starttime">From:</label>
+            <input type="text" name="starttime" placeholder="22-03-2019">
+            <br>
+            <label for="endtime">To:</label>
+            <input type="text" name="endtime" placeholder="23-03-2019">
+            <br>
+            <label for="limit">Limit:</label>
+            <input type="text" name="limit" value="10">
+            <br>
+            <button id="get-quakes" type="button">Get Quakes</button>
+        </div>
+
+        <div class="earthquakes">
+            <!-- <div class="quake-item">
+                <div class="magnitude">
+                    <p>mag</p>
+                </div>
+                <div class="location">
+                    <p>22km, SE of Alabama.</p>
+                </div>
+            </div>
+            <div class="quake-item">
+                <div class="magnitude">
+                    <p>mag</p>
+                </div>
+                <div class="location">
+                    <p>22km, SE of Alabama.</p>
+                </div>
+            </div>
+            <div class="quake-item">
+                <div class="magnitude">
+                    <p>mag</p>
+                </div>
+                <div class="location">
+                    <p>22km, SE of Alabama.</p>
+                </div>
+            </div>
+            <div class="quake-item">
+                <div class="magnitude">
+                    <p>mag</p>
+                </div>
+                <div class="location">
+                    <p>22km, SE of Alabama.</p>
+                </div>
+            </div>         -->
+        </div>
+    </div>
+
+    <script>
+        const earthquakes = document.querySelector('.earthquakes');
+        const getQuakes = () => {
+            const startTime = document.querySelector(".inputs input[name='starttime']").value;
+            const endTime = document.querySelector(".inputs input[name='endtime']").value;
+            const limit = document.querySelector(".inputs input[name='limit']").value;
+            const baseUrl = 'https://earthquake.usgs.gov/fdsnws/event/1/';
+            const reqUrl = `${baseUrl}query?format=geojson&limit=${limit}&starttime=${startTime}&endtime=${endTime}`;
+            fetch(reqUrl)
+                .then(res => res.json())
+                .then(({features}) => {
+                    for (let i = 0; i < features.length; i++) {
+                        let {properties} = features[i];
+                        const item = `<div class="quake-item">
+                                        <div class="magnitude">
+                                            <p>${properties.mag}</p>
+                                        </div>
+                                        <div class="location">
+                                            <p>${properties.place}</p>
+                                        </div>
+                                      </div>`;
+                        earthquakes.insertAdjacentHTML('beforeend', item);
+                    }
+                })
+                .catch(e => console.log(e));
+        }
+
+        const getQuakesButton = document.querySelector('button#get-quakes');
+        getQuakesButton.addEventListener('click', getQuakes);
+
+    </script>
+</body>
+</html>
