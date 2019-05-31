@@ -18,7 +18,7 @@
                     <div class="products" id="${product._id}">
                         <img src="${baseUrl}${product.productImage}" alt="${product.name}" class="product-image">
                         <h4 class="product-title">${product.name}</h4>
-                        <p class="product-price"><span class="currency">$</span>$<span class="amt">${product.price}</span></p>
+                        <p class="product-price"><span class="currency">$</span><span class="amt">${product.price}</span></p>
                     </div>
                     `;
                     productsWrapper.insertAdjacentHTML('beforeend', markup);
