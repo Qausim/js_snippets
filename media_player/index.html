@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Media Player</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <div class="video-wrapper">
+    <video preload="metadata">
+      <source src="./assets/2019-07-17 04-49-34.mp4" type="video/mp4">
+    </video>
+    <div class="video__controls">
+      <div class="video__progress-bar"></div>
+      <div class="video__progress-bar fake"></div>
+      <div class="video__grouped-controls">
+        <div class="left">
+          <div class="video__control standalone video__play-pause video__play"></div>
+          <div class="video__control video__fast-rewind"></div>
+          <div class="video__control standalone video__fast-forward"></div>
+          <div class="video__control standalone video__stop"></div>
+          <div class="video__control standalone video__time">00:00</div>
+          <div class="video__control video__mute volume--low"></div>
+          <input type="range" class="video__control video__volume"
+            step="1" min="0" max="10" value="5">
+        </div>
+        <div class="right">
+          <div class="video__control video__fullscreen fullscreen--off"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/script.js"></script>
+</body>
+</html>
